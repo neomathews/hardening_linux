@@ -1,0 +1,37 @@
+---
+fich_conf_profile: "/etc/profile"
+fich_profile_j2: "profile.j2"
+fich_user_profile_tyrande: "/home/tyrande/.profile"
+fich_user_profile_root: "/root/.profile"
+fich_user_bashrc: "/home/tyrande/.bashrc"
+fich_user_bashrc_root: "/root/.bashrc"
+fich_bash_completion: "/etc/profile.d/bash_completion.sh"
+fich_logindefs: "/etc/login.defs"
+fich_logindefs_j2: "login.defs.j2"
+fich_limits: "/etc/security/limits.conf"
+fich_limits_j2: "limits.conf.j2"
+fich_grub: "/etc/default/grub"
+fich_grub_j2: "grub.j2"
+
+umask_line: "umask 027"
+umask_line_defs: "UMASK           027"
+
+user_news: "news"
+user_list: "list"
+user_irc: "irc"
+user_fax: "fax"
+
+group_operador: "operator"
+group_irc: "irc"
+
+fich_servicios: "/etc/services"
+fich_shadow: "/etc/shadow"
+fich_gshadow: "/etc/gshadow"
+fich_passwd: "/etc/passwd"
+fich_groups: "/etc/group"
+
+fich_cron_allow: "/etc/cron.allow"
+fich_cron_deny: "/etc/cron.deny"
+
+fich_at_allow: "/etc/at.allow"
+fich_at_deny: "/etc/at.deny"

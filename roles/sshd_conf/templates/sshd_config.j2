@@ -1,0 +1,40 @@
+Port 22
+ListenAddress {{ ansible_default_ipv4.address }}
+PermitRootLogin without-password
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding no
+PrintMotd no
+AcceptEnv LANG LC_*
+MaxStartups 3:30:30
+LoginGraceTime 60
+ClientAliveInterval 300
+ClientAliveCountMax 2
+Compression NO
+LogLevel VERBOSE
+PrintLastLog yes
+TCPKeepalive no
+
+# Cifrados permitidos
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+# Maximo numero de intentos de login fallidos seguidos
+MaxAuthTries 3
+MaxSessions 2
+
+#banner
+Banner /etc/issue
+
+# No hacemos forwarding de las X
+AllowAgentForwarding no
+AllowTcpForwarding no
+
+# Eliminar consulta DNS
+UseDNS no
+
+#
+Subsystem       sftp    /usr/lib/openssh/sftp-server
+
+# no permitir otros usuarios
+AllowUsers tyrande
+AllowUsers root

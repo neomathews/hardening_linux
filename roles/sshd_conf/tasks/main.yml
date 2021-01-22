@@ -1,0 +1,50 @@
+---
+- name: cambiar fichero conf
+  template:
+    src: "{{ sshd_conf_file_j2 }}"
+    dest: "{{ sshd_conf_file }}"
+  notify: restart sshd
+
+- name: quitar mensaje de login root
+  file:
+    path: "{{ motd_file_root }}"
+    mode: "0644"
+    owner: root
+    group: root
+    state: touch
+
+- name: quitar mensaje de login tyrande
+  file:
+    path: "{{ motd_file_tyrande }}"
+    mode: "0644"
+    owner: tyrande
+    group: tyrande
+    state: touch
+
+- name: cambiar banner
+  template:
+    src: "{{ issue_file_js }}"
+    dest: "{{ item }}"
+  with_items:
+    - "{{ issue_file }}"
+    - "{{ issue_file2 }}"
+  notify: restart sshd
+
+- name: securizar directorios ssh
+  file:
+    path: "{{ item }}"
+    mode: 0700
+  with_items:
+    - "{{ ssh_dir_root }}"
+    - "{{ ssh_dir_tyrande }}"
+  notify: restart sshd
+
+- name: securizar ficheros de hosts autorizados
+  file:
+    path: "{{ item }}"
+    mode: 0600
+  with_items:
+    - "{{ auth_fich_root }}"
+    - "{{ auth_fich_tyrande }}"
+  notify: restart sshd
+...

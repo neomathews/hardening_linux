@@ -1,0 +1,17 @@
+---
+- name: desinmutar ficheros users
+  shell: '/usr/bin/chattr -i /etc/services /etc/shadow /etc/gshadow /etc/passwd /etc/group'
+
+- name: install packages
+  apt:
+    name: "{{ pkg_install }}"
+    update_cache: yes
+    state: latest
+
+- name: fichero conf
+  template:
+    src: "{{ fich_conf_template }}"
+    dest: "{{ fich_conf }}"
+
+- name: inmutar ficheros users
+  shell: '/usr/bin/chattr +i /etc/services /etc/shadow /etc/gshadow /etc/passwd /etc/group'

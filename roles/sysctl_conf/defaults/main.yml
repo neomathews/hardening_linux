@@ -1,0 +1,5 @@
+---
+fichero_kernel_conf: "10-sysctl_kernel.conf.j2"
+fichero_network_conf: "10-sysctl_network.conf.j2"
+destino_kernel: "/etc/sysctl.d/10-sysctl_kernel.conf"
+destino_network: "/etc/sysctl.d/10-sysctl_network.conf"

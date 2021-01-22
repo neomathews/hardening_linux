@@ -1,0 +1,16 @@
+---
+- name: parametros de kernel
+  template:
+    src: "{{ fichero_kernel_conf }}"
+    dest: "{{ destino_kernel }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: parametros de red
+  template:
+    src: "{{ fichero_network_conf }}"
+    dest: "{{ destino_network }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"

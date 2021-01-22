@@ -1,0 +1,91 @@
+---
+- name: fichero limits
+  template:
+    src: "{{ fich_limits_j2 }}"
+    dest: "{{ fich_limits }}"
+
+- name: fichero profile
+  template:
+    src: "{{ fich_profile_j2 }}"
+    dest: "{{ fich_conf_profile }}"
+
+- name: fichero defs
+  template:
+    src: "{{ fich_logindefs_j2 }}"
+    dest: "{{ fich_logindefs }}"
+
+- name: umask 027
+  lineinfile:
+    state: present
+    dest: "{{ item }}"
+    line: "{{ umask_line }}"
+    insertafter: EOF
+  with_items:
+    - "{{ fich_user_profile_tyrande }}"
+    - "{{ fich_user_profile_root }}"
+    - "{{ fich_user_bashrc }}"
+    - "{{ fich_user_bashrc_root }}"
+    - "{{ fich_bash_completion }}"
+
+- name: eliminar usuarios innecesarios
+  user: 
+    name: "{{ item }}"
+    state: absent
+    remove: yes
+  with_items: 
+    - "{{ user_news }}"
+    - "{{ user_list }}"
+    - "{{ user_irc }}"
+    - "{{ user_fax }}"
+    
+- name: eliminar grupos innecesarios
+  group:
+     name: "{{ item }}"
+     state: absent
+  with_items:
+    - "{{ group_operador }}"
+    - "{{ group_irc }}"
+
+- name: inmutamos ficheros de usuarios y pass
+  shell: '/usr/bin/chattr +i /etc/services /etc/shadow /etc/gshadow /etc/passwd /etc/group'
+
+- name: cambiamos permisos de directorio cron
+  file:
+    path: "/etc/cron*"
+    mode: 0700
+    recurse: true
+
+- name: cambiar bashrc 
+  lineinfile:
+    state: present
+    dest: "{{ fich_user_bashrc }}"
+    regexp: "HIST"
+    line: "#HIST"
+
+    #- name: readonly al path
+    #  lineinfile:
+    #    state: present
+    #    dest: "{{ item }}"
+    #    line: "readonly PATH"
+    #    insertafter: EOF
+    #  with_items:
+    #    - "{{ fich_user_profile_tyrande }}"
+    #    - "{{ fich_user_profile_root }}"
+
+- name: securizar particion tmp
+  replace:
+    dest: "/etc/fstab"
+    regexp: "/tmp ext4 defaults"
+    replace: "/tmp ext4 defaults,nosuid,noexec,relatime"
+  #notify: reboot server
+  
+- name: deshabilitar ipv6 via grub
+  template:
+    src: "{{ fich_grub_j2 }}"
+    dest: "{{ fich_grub }}"
+
+- name: update grub
+  shell: 'update-grub'
+
+- name: deshabilitar apt-update
+  shell: 'systemctl mask apt-daily.service apt-daily-upgrade.service && systemctl disable apt-daily.service apt-daily-upgrade.service && systemctl disable apt-daily.timer apt-daily-upgrade.timer'
