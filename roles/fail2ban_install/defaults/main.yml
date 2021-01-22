@@ -6,4 +6,4 @@ fich_conf_template: "jail.conf.j2"
 maxretry_ssh: "9"
 bantime_ssh: "600"
 
-email_sistemas: "sistemas@atib.es"
+email_sistemas: "xxx@xxx.xx"
