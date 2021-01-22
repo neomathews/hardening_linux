@@ -1,0 +1,5 @@
+---
+- name: configuracion sshd
+  hosts: ubuntu_dmz
+  roles:
+    - sshd_conf

@@ -1,0 +1,6 @@
+---
+- name: configuracion de parametros de kernel
+  hosts: ubuntu_dmz
+  roles:
+    - sysctl_conf
+...

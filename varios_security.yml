@@ -1,0 +1,6 @@
+---
+- name: varios de secadmin
+  hosts: ubuntu_dmz
+  roles: 
+    - varios_security
+...

@@ -1,0 +1,5 @@
+---
+- name: instalacion de fail2ban para sshd
+  hosts: ubuntu_dmz
+  roles:
+    - fail2ban_install
